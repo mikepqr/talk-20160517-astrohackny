@@ -1,19 +1,38 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Mike Williams and Hilary Mason at Insight</title>
+        <title>Mike Williams</title>
         <meta name="robots" content="noindex" />
         <meta charset="utf-8">
         <style>
-        @import url(https://fonts.googleapis.com/css?family=Poly);
-        @import url(https://fonts.googleapis.com/css?family=Roboto);
-        @import url(https://fonts.googleapis.com/css?family=Roboto+Mono);
-        body { font-family: 'Roboto'; }
+        @import url(fonts.css);
+        body { 
+            font-family: 'Roboto';
+        }
         h1, h2, h3 {
-            font-family: 'Poly';
+            font-family: 'Merriweather';
+            font-weight: normal;
         }
         li {
             margin-top: 1ex;
+        }
+        a {
+            color: blue;
+        }
+        .full-width {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .full-height {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .full-bleed {
+            padding: 0;
+        }
+        .torus {
+            background-image: url(stanfordtorus.jpg);
+            background-size: cover !important;
         }
         .column:first-of-type {float:left}
         .column:last-of-type {float:right}
@@ -25,157 +44,45 @@
 <body>
 <textarea id="source">
 
-class: center, middle
-
-<img src="ff-logo-vertical-white-bg.png" width="80%">
-
-## Mike Williams and Hilary Mason
-
-[mike.place/talks/insight](http://mike.place/talks/insight/)
-
----
-
 # This talk
 
- - Some advice
-   - hopefully non-obvious, i.e. not '10 ways to get a killer job in data science'
-   - definitely incomplete, i.e. far from a complete list of all the things you could or should do
- - A high-level, semi-technical introduction to neural networks, which are not as scary as you think
- - Some further reading if you want to learn more
+ - A high-level, semi-technical introduction to neural networks
+    - fully-connected feed-forward (i.e. regular) neural networks
+    - how to implement them with keras
+    - convolutional neural networks (images)
+    - recurrent neural networks (language, time series)
+    - selected further reading
+
+ - Follow along
+     - Slides (with links) [mike.place/talks/columbia](http://mike.place/talks/columbia)
+     - `$ pip install keras seaborn sklearn jupyter`
+     - <code>$ git clone [github.com/fastforwardlabs/keras-hello-world](https://github.com/fastforwardlabs/keras-hello-world/)</code>
 
 ---
 
-# Advice about advice
+class: center, middle, full-bleed
 
- - Data science is a young discipline, so
-   - people who've being doing it for long enough to be experienced are unusual
-   in many ways
-   - the people with CVs more like yours don't have much experience
---
-
- - What kind of 'data scientist' are you talking to?
---
-
-   - A business analytics person
-   - A data engineering person
-   - A software engineer who taught themself statistics
-   - A science PhD who taught themself to code
-   - A quasi-academic with a PhD in machine learning who got hired at NIPS
-
----
-
-# Me
-
-- Academia
-
- - Undergrad physics 🇬🇧
- - PhD astrophysics 🇬🇧
- - 2 years at postdoc 1 🇩🇪
- - 1 year at postdoc 2 🇺🇸
-
---
-
-- Left academia summer 2014 🎉
-- Not academia
-
- - 1 year at Brandwatch as a 'Data Scientist'
- - At Fast Forward Labs as a 'Research Engineer' since October 2015
-
----
-
-# Getting a job
-
- - Angel List
- - Salary data
-   - [The O'Reilly Data Science Salary Survey](http://www.oreilly.com/data/free/files/2015-data-science-salary-survey.pdf)
-   - [h1bdata.info](http://h1bdata.info/) and friends
-
----
-
-# Interviews
-
- - Screening questions
-   - [what's a generator](http://nedbatchelder.com/text/iter.html)?
-   - what are the ways of searching a graph?
- - 'Explain something complicated'
- - White boards
-   - [10001st prime](https://projecteuler.net/problem=7)
-   - [Lots of unix](http://aadrake.com/command-line-tools-can-be-235x-faster-than-your-hadoop-cluster.html)
- - Outline an interpolation algorithm
- - Code up regression model for citibike usage
- - Take-home: 311 data
- - Take-home: recommendation engine for github
-
----
-
-# Choosing a job
-
-[Advice from Stitchfix](http://multithreaded.stitchfix.com/blog/2015/03/31/advice-for-data-scientists/)
-
-> A Data Scientist should look for a company that actually uses data science to
-> set themselves apart from the competition. When this happens, the company
-> becomes supportive to data science instead of the other way around. It's
-> willing to invest in acquiring the top talent, building the necessary
-> infrastructure, pioneering the latest algorithmic and computational techniques,
-> and building incredible engineering products to manifest the data science. 
---
-
-
-> **"Good enough" is not a phrase that is uttered in the context of a strategic
-> differentiator**.
-
----
-
-# How getting a job outside academia is different
-
- - The visa situation is much tougher
- - Self promotion is still important. Don't stop giving talks!
- - Changing jobs is easier and more common
- - Your career options increase, and not everything has an application form. This is exciting and overwhelming. You'll get the hang of it.  
---
- 
-    > [Harvard grads] are vulnerable to Wall Street investment firms and to
-    > things like Teach for America because they have application processes at all.
-    > But life, normal adult life, doesn’t have an application process.
-    >
-    > — [Cathy O'Neill](http://mathbabe.org/2012/02/17/how-harvard-is-failing-its-students/)
----
-
-# Brandwatch
-
-<img src="brandwatch.png" style="width:100%">
-
-
----
-
-# Fast Forward Labs
-
- - Each quarter we profile a new development in computer science, statistics or
- machine learning
- - We build a prototype and write a report
-
-<img src="ff01-cover.png" style="width:31%">
-<img src="ff02-cover.png" style="width:31%">
-<img src="ff03-cover.png" style="width:31%">
+<img src="ff01-cover.png" style="width:24%">
+<img src="ff02-cover.png" style="width:24%">
+<img src="ff03-cover.png" style="width:24%">
+<img src="ff04-cover.png" style="width:24%">
 
 
 ---
 
 # Neural networks
 
- - Logistic regression learns a mapping from features X1..XN to a classification y
- - Can only learn linear relationships, unless you add cross terms X1⨉X2, etc. 
+ - Logistic regression learns a mapping from features _X1_.._XN_ to a classification y
+ - Can only learn linear relationships, unless you add cross terms _X1_ ⨉ _X2_, etc. 
  - This is laborious, requires domain specific knowledge, and grows the parameter space exponentially
- - Feed-forward neural networks learn which cross terms are useful, reducing the parameter space
+ - Feed-forward neural networks learn which cross terms are useful, reducing the parameter space while still allowing them to describe complex boundaries
 
 
 .center[<img src="example_network.svg" style="width:40%">]
 
 ---
 
-class: split-30
-
-# Hello world in `keras`
+class: middle, split-30
 
 .column[
 <img src="example_network.svg" style="width:100%">
@@ -201,9 +108,9 @@ model.fit(X_train, Y_train,
 
 ---
 
-class: center, middle
+## Convolutional neural networks
 
-<img src="imagevector-01-01.png" style="width:70%">
+.center[<img src="imagevector-01-01.png" style="width:70%">]
 
 ---
 
@@ -217,10 +124,10 @@ class: center, middle
 
 ---
 
-class: center, middle
-[pictograph.us](http://www.pictograph.us/)
+class: full-bleed, middle, center
 
-<img src="pictograph.png" align="middle" width="70%">
+<img src="pictograph-logo.png" width=20%>
+<img src="pictograph-eg.png" width=100%>
 
 ---
 
@@ -255,57 +162,33 @@ class: split-30
 
 ---
 
-# References: neural networks
+### References
 
 Introduction
 
- - Fast Forward reports #3 and #4
- - 'Deep Learning' by LeCun et al. [go.nature.com/7cjbaa](http://go.nature.com/7cjbaa)
+ - *Deep Learning* by LeCun et al. [go.nature.com/7cjbaa](http://go.nature.com/7cjbaa)
+ - _Deep Learning_ by Goodfellow, Bengio and Courville [deeplearningbook.org](http://www.deeplearningbook.org/)
 
 Maths and optimization
 
  - The relevant lectures from Andrew Ng's Coursera course
  - Chapters 1-3 of Michael Nielsen's textbook, [neuralnetworksanddeeplearning.com](http://neuralnetworksanddeeplearning.com/)
 
-Intuition for backprop, convnets and RNNs
+Intuition for backprop, CNNs and RNNs
 
  - Chris Olah's articles, [colah.github.io](http://colah.github.io/)
 
-NLP and RNNs
+Applications of CNNs and RNNs
 
+ - [My solution for the Galaxy Zoo challenge](http://benanne.github.io/2014/04/05/galaxy-zoo.html) by Sander Dieleman
  - [*A Primer on Neural Network Models for Natural Language Processing*](http://u.cs.biu.ac.il/~yogo/nnlp.pdf) by Yoav Goldberg
-
----
-
-# Technical skills you may not have picked up in academia
-
- - Algorithms and data structures
-   - Big-Oh notation, i.e. how bad is this `for` loop?
-   - Graphs
- - NLP and text
- - Bayesian inference
- - AWS
-
-
----
-
-# References
-
-- NLP and Bayesian inference
- - [*Parameter estimation for text analysis*](http://www.arbylon.net/publications/text-est.pdf) by Gregor Heinrich
-- Algorithms, data structures, and graphs
- - e.g. Tim Roughgarden's Coursera course
-- AWS
- - [Introduction to AWS video](https://www.youtube.com/watch?v=1Eh1uxLyXJ8)
-- Ethics
- - Section A of [Big Data's Disparate Impact by Barocas and Selbst](http://papers.ssrn.com/sol3/papers.cfm?abstract_id=2477899)
 
 ---
 
 # Links
 
- - This talk: [mike.place/talks/insight](http://mike.place/talks/insight/)
- - <mike@fastforwardlabs.com>
+ - [mike.place/talks/columbia/](http://mike.place/talks/columbia/)
+ - <mike@mike.place>
  - [@mikepqr](https://twitter.com/mikepqr)
 
 
